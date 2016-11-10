@@ -6,3 +6,25 @@ body {
 a {
   color: #00B7FF;
 }
+
+.container {
+    display: block;
+    float: left;
+    width: 50%;
+}
+
+.header {
+    text-align: center;
+    font-size: 4em;
+}
+
+.input-box {
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+}
+
+.sample-box {
+    width: 20em;
+    float: left;
+    display: block;
+}

@@ -1,0 +1,91 @@
+extends layout
+
+block content
+    script.
+
+        function reset() {
+            var form = document.getElementById('add-problem');
+            form.reset();
+        }
+
+        function add_sample_cases() {
+            var num_sample = document.getElementById('num_sample');
+            var value = num_sample.value;
+            num_sample.value = parseInt(value) + 1;
+
+            var form = document.getElementById('container_sample_cases');
+            var container = document.createElement('div');
+
+            var input_container = document.createElement('div');
+            var output_container = document.createElement('div');
+            input_container.setAttribute('class', 'container');
+            output_container.setAttribute('class', 'container');
+
+            var input = document.createTextNode('Input');
+            var output = document.createTextNode('Output');
+
+            var input_box = document.createElement('textarea');
+            var output_box = document.createElement('textarea');
+            input_box.setAttribute('cols', '40');
+            input_box.setAttribute('rows', '5');
+            input_box.setAttribute('required', 'required');
+            input_box.setAttribute('name', 'sample_' + num_sample.value);
+            output_box.setAttribute('cols', '40');
+            output_box.setAttribute('rows', '5');
+            output_box.setAttribute('required', 'required');
+            output_box.setAttribute('name', 'sample_' + num_sample.value);
+
+            input_container.appendChild(input);
+            var br = document.createElement('br');
+            input_container.appendChild(br);
+            br = document.createElement('br');
+            input_container.appendChild(br);
+            input_container.appendChild(input_box);
+            br = document.createElement('br');
+            input_container.appendChild(br);
+            br = document.createElement('br');
+            input_container.appendChild(br);
+
+            output_container.appendChild(output);
+            br = document.createElement('br');
+            output_container.appendChild(br);
+            br = document.createElement('br');
+            output_container.appendChild(br);
+            output_container.appendChild(output_box);
+            br = document.createElement('br');
+            output_container.appendChild(br);
+            br = document.createElement('br');
+            output_container.appendChild(br);
+
+            container.appendChild(input_container);
+            container.appendChild(output_container);
+
+            form.appendChild(container);
+        }
+    form(method = 'POST' id = 'add_problem')
+        div(class = 'container' id = 'add_problem_block')
+            key Problem Name:
+            br
+            input(type = 'text' name = 'name' id = 'name' size = '35' class = 'input-box' required = 'required')
+            br
+            key Time Limit:
+            br
+            input(type = 'text' name = 'time' id = 'time' size = '35' class = 'input-box' required = 'required')
+            br
+            key Memory Limit:
+            br
+            input(type = 'text' name = 'memo' id = 'memo' size = '35' class = 'input-box' required = 'required')
+            br
+            key Description:
+            br
+            textarea(name = 'description' id = 'description' cols = '80' rows = '20' class = 'input-box' required = 'required')
+            br
+            input(type = 'hidden' name = 'num_sample' id = 'num_sample' value = 0)
+            button(type = 'submit' id = 'submit' style = 'margin-right: 1em;')= 'submit'
+            button(type = 'reset' id = 'reset' style = 'margin-right: 1em;')= 'reset'
+            button(type = 'button' id = 'add_cases' style = 'margin-right: 1em;' onclick = 'add_sample_cases()')= 'add test cases'
+        div(class = 'container' id = 'container_sample_cases')
+
+
+
+
