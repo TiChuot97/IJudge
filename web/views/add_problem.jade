@@ -8,13 +8,35 @@ block content
             form.reset();
         }
 
+        function delete_sample_case() {
+            var form = document.getElementById('container_sample_cases');
+            var num_sample = document.getElementById('num_sample');
+            var value = num_sample.value;
+            num_sample.value = parseInt(value) - 1;
+            console.log(num_sample.value);
+            var sample = document.getElementById('sample_' + value);
+            form.removeChild(sample);
+
+            var del_case = document.getElementById('del_cases');
+            if (parseInt(num_sample.value) == 0)
+                del_case.style.display = 'none';
+        }
+
         function add_sample_cases() {
             var num_sample = document.getElementById('num_sample');
             var value = num_sample.value;
+
+            if (parseInt(value) == 5)
+                return;
+
             num_sample.value = parseInt(value) + 1;
+
+            var del_case = document.getElementById('del_cases');
+            del_case.style.display = 'block';
 
             var form = document.getElementById('container_sample_cases');
             var container = document.createElement('div');
+            container.setAttribute('id', 'sample_' + num_sample.value);
 
             var input_container = document.createElement('div');
             var output_container = document.createElement('div');
@@ -60,9 +82,19 @@ block content
             container.appendChild(input_container);
             container.appendChild(output_container);
 
-            form.appendChild(container);
+            form.insertBefore(container, form.lastChild);
         }
-    form(method = 'POST' id = 'add_problem')
+
+    // Navigating bar
+    nav(class = 'navigate-bar')
+        ul
+            h1 iJudge
+            li: a(href = '/add_problem') Add new problem
+            li: a(href = '/problem_list/page/1') All problems
+            li: a(href = '/') Home
+
+
+    form(method = 'POST' id = 'add_problem' style = 'margin-top: 2em;')
         div(class = 'container' id = 'add_problem_block')
             key Problem Name:
             br
@@ -85,6 +117,7 @@ block content
             button(type = 'reset' id = 'reset' style = 'margin-right: 1em;')= 'reset'
             button(type = 'button' id = 'add_cases' style = 'margin-right: 1em;' onclick = 'add_sample_cases()')= 'add test cases'
         div(class = 'container' id = 'container_sample_cases')
+            button(type = 'button' id = 'del_cases' style = 'display: none;' onclick = 'delete_sample_case()')= 'delete case'
 
 
 

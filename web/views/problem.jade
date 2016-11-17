@@ -1,6 +1,14 @@
 extends layout
 
 block content
+    // Navigating bar
+    nav(class = 'navigate-bar')
+        ul
+            h1 iJudge
+            li: a(href = '/add_problem') Add new problem
+            li: a(href = '/problem_list/page/1') All problems
+            li: a(href = '/') Home
+
     h1(class = 'header')= name
     h2(style = 'text-align: center;')= 'Time Limit: ' + time
     h2(style = 'text-align: center;')= 'Memory Limit: ' + memory

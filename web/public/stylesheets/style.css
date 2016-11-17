@@ -28,3 +28,49 @@ a {
     float: left;
     display: block;
 }
+
+.problem-list {
+    margin-top: 5em;
+    width: 50%;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.problem-list th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.navigate-bar h1 {
+    font-size: 30px;
+    padding: 0px 15px;
+    color: white;
+    float: left;
+    vertical-align: middle;
+}
+
+.navigate-bar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+.navigate-bar li {
+    float: right;
+    height: auto;
+}
+
+.navigate-bar li a {
+    display: inline-block;
+    color: white;
+    font-size: 15px;
+    text-align: center;
+    padding: 35px 35px;
+    text-decoration: none;
+}
+
+.navigate-bar li a:hover {
+    background-color: #111;
+}

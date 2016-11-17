@@ -1,5 +1,10 @@
 extends layout
 
 block content
-    h1= title
-    p Welcome to #{title}
+    // Navigating bar
+    nav(class = 'navigate-bar')
+        ul
+            h1 iJudge
+            li: a(href = '/add_problem') Add new problem
+            li: a(href = '/problem_list/page/1') All problems
+            li: a(href = '/') Home

@@ -1,5 +1,10 @@
+/**
+ * Created by lanhoangdao on 11/16/16.
+ */
+
 var express = require('express');
 var router = express.Router();
+var database = require('../database/database');
 
 /* GET problem creating page. */
 router.get('/', function(req, res, next) {
@@ -20,6 +25,9 @@ router.post('/', function(req, res, next) {
         cases[index]['input'] = req.body['sample_' + index][0];
         cases[index]['output'] = req.body['sample_' + index][1];
     }
+
+    database.add_problem(name, time, memory, description);
+    database.add_sample(cases);
 
     res.render('problem', {
         title: 'Problem',
