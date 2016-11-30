@@ -42,7 +42,6 @@ block content
             document.getElementById('create_new_account').submit();
         }
 
-
     div(style = 'position: absolute; left: 40%;')
         form(method = 'POST' id = 'create_new_account' style = 'margin-top: 2em;')
             key Username
@@ -58,3 +57,15 @@ block content
         div
             a(style = 'display: none; color: red; margin-top: 1em;' id = 'username_error')= 'Username should only contain alphabet characters and numbers. Username should contain at most 10 characters.'
             a(style = 'display: none; color: red; margin-top: 1em;' id = 'password_error')= 'Password should have at least one uppercase character and one number. Password should contain at least 6 characters.'
+            a(style = 'display: none; color: red; margin-top: 1em;' id = 'account_existed')= 'Account already existed!'
+
+    script.
+        function error_account() {
+            var failed = !{failed}
+            if (failed) {
+                var error_acc = document.getElementById('account_existed');
+                error_acc.style.display = 'block';
+            }
+        }
+
+        error_account();
