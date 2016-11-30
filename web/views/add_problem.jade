@@ -51,11 +51,11 @@ block content
             input_box.setAttribute('cols', '40');
             input_box.setAttribute('rows', '5');
             input_box.setAttribute('required', 'required');
-            input_box.setAttribute('name', 'sample_' + num_sample.value);
+            input_box.setAttribute('name', 'input_sample_' + num_sample.value);
             output_box.setAttribute('cols', '40');
             output_box.setAttribute('rows', '5');
             output_box.setAttribute('required', 'required');
-            output_box.setAttribute('name', 'sample_' + num_sample.value);
+            output_box.setAttribute('name', 'output_sample_' + num_sample.value);
 
             input_container.appendChild(input);
             var br = document.createElement('br');
@@ -85,15 +85,6 @@ block content
             form.insertBefore(container, form.lastChild);
         }
 
-    // Navigating bar
-    nav(class = 'navigate-bar')
-        ul
-            h1 iJudge
-            li: a(href = '/add_problem') Add new problem
-            li: a(href = '/problem_list/page/1') All problems
-            li: a(href = '/') Home
-
-
     form(method = 'POST' id = 'add_problem' style = 'margin-top: 2em;')
         div(class = 'container' id = 'add_problem_block')
             key Problem Name:
@@ -119,6 +110,5 @@ block content
         div(class = 'container' id = 'container_sample_cases')
             button(type = 'button' id = 'del_cases' style = 'display: none;' onclick = 'delete_sample_case()')= 'delete case'
 
-
-
+        block content_edit
 

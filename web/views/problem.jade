@@ -1,13 +1,52 @@
 extends layout
 
 block content
-    // Navigating bar
-    nav(class = 'navigate-bar')
+    script.
+        function delete_problem() {
+            if (confirm('Are you sure you want to delete this problem?')) {
+                var form = document.createElement('form');
+                var input = document.createElement('input');
+                form.method = 'POST';
+                form.action = '/delete_problem';
+
+                input.value = !{id};
+                input.name = 'id';
+
+                form.appendChild(input);
+                document.body.appendChild(form);
+
+                form.submit();
+            }
+        }
+
+    nav(class = 'sub-bar' id = 'sub_bar')
         ul
-            h1 iJudge
-            li: a(href = '/add_problem') Add new problem
-            li: a(href = '/problem_list/page/1') All problems
-            li: a(href = '/') Home
+            li: a(href = '/edit_problem/' + id id = 'edit_problem' style = 'display: none;') Edit
+            li: a(button = 'delete_problem' id = 'delete_problem' style = 'display: none;' onclick = 'delete_problem()') Delete
+            li: a(href = '/submit_problem' id = 'submit_problem') Submit
+
+    script.
+        function get_username(cookie) {
+            var pos = cookie.indexOf('**');
+            return (cookie.substring(0, pos)).substring(5);
+        }
+
+        function display_permission() {
+            var t = document.getElementById('edit_problem');
+            var cookie = document.cookie;
+            var author = '#{author}';
+            var username = undefined;
+            if (cookie != '' && cookie != undefined)
+                username = get_username(cookie);
+            if (username != undefined && username == author) {
+                var delete_problem = document.getElementById('delete_problem');
+                var edit_problem = document.getElementById('edit_problem');
+                delete_problem.style.display = 'block';
+                edit_problem.style.display = 'block';
+            }
+        }
+
+        display_permission();
 
     h1(class = 'header')= name
     h2(style = 'text-align: center;')= 'Time Limit: ' + time

@@ -74,3 +74,47 @@ a {
 .navigate-bar li a:hover {
     background-color: #111;
 }
+
+.username {
+    color: black;
+    font-weight: bold;
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    font-size: 18px;
+    margin-bottom: 1em;
+    margin-top: 1em;
+}
+
+.sub-bar {
+    position: relative;
+    width: 100%;
+    left: 0%;
+}
+
+.sub-bar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: gainsboro;
+}
+
+.sub-bar li {
+    float: left;
+    height: auto;
+}
+
+.sub-bar li a {
+    display: inline-block;
+    color: black;
+    font-size: 13px;
+    text-align: center;
+    padding: 15px 50px;
+    text-decoration: none;
+}
+
+.sub-bar li a:hover {
+    background-color: gray;
+    cursor: pointer;
+}

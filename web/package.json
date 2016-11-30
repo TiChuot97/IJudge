@@ -12,7 +12,9 @@
     "express": "~4.13.4",
     "jade": "~1.11.0",
     "morgan": "~1.7.0",
+    "mysql": "^2.5.4",
+    "password-hash-and-salt": "^0.1.4",
     "serve-favicon": "~2.3.0",
-	"mysql": "^2.5.4"
+    "express-session": "^1.7.6"
   }
 }

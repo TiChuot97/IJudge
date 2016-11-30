@@ -1,0 +1,60 @@
+extends layout
+
+block content
+    script.
+        function submit_form() {
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+
+            var username_err = document.getElementById('username_error');
+            var password_err = document.getElementById('password_error');
+            username_err.style.display = 'none';
+            password_err.style.display = 'none';
+
+            var check_username = true;
+            if (username.length > 10) check_username = false;
+            for (var index = 0; index < username.length; ++index) {
+                var check = false;
+                if (username[index] >= '0' && username[index] <= '9') check = true;
+                if (username[index] >= 'a' && username[index] <= 'z') check = true;
+                if (username[index] >= 'A' && username[index] <= 'Z') check = true;
+                if (!check) check_username = false
+            }
+            if (!check_username) {
+                username_err.style.display = 'block';
+                return;
+            }
+
+            var check_password = true;
+            if (password.length < 6) check_password = false;
+            var check_upper = false;
+            var check_number = false;
+            for (var index = 0; index < password.length; ++index) {
+                if (password[index] >= '0' && password[index] <= '9') check_number = true;
+                if (password[index] >= 'A' && password[index] <= 'Z') check_upper = true;
+            }
+            if (!check_upper || !check_number) check_password = false;
+            if (!check_password) {
+                password_err.style.display = 'block';
+                return;
+            }
+
+            document.getElementById('create_new_account').submit();
+        }
+
+
+    div(style = 'position: absolute; left: 40%;')
+        form(method = 'POST' id = 'create_new_account' style = 'margin-top: 2em;')
+            key Username
+            br
+            input(type = 'text' name = 'username' id = 'username' size = '35' class = 'input-box' required = 'required')
+            br
+            key Password:
+            br
+            input(type = 'password' name = 'password' id = 'password' size = '35' class = 'input-box' required = 'required')
+            br
+            button(type = 'button' id = 'create_account_btn' style = 'margin-right: 1em;' onclick = 'submit_form()')= 'create new account'
+
+        div
+            a(style = 'display: none; color: red; margin-top: 1em;' id = 'username_error')= 'Username should only contain alphabet characters and numbers. Username should contain at most 10 characters.'
+            a(style = 'display: none; color: red; margin-top: 1em;' id = 'password_error')= 'Password should have at least one uppercase character and one number. Password should contain at least 6 characters.'

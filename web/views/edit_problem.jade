@@ -1,0 +1,30 @@
+extends add_problem
+
+block content_edit
+    script.
+        function add_default_value() {
+            var name = document.getElementById('name');
+            var time = document.getElementById('time');
+            var memo = document.getElementById('memo');
+            var description = document.getElementById('description');
+
+            name.value = '#{name}';
+            time.value = '#{time}';
+            memo.value = '#{memory}';
+            description.defaultValue = '#{description}';
+
+            var string_samples = '#{sample}';
+            var samples = JSON.parse(string_samples);
+
+            for (var key in samples) {
+                add_sample_cases();
+                var num_samples = parseInt(document.getElementById('num_sample').value);
+                var input = document.getElementByName('input_sample_' + num_samples);
+                var output = document.getElementByName('output_sample_' + num_samples);
+
+                input.defaultValue = samples[key]['input'];
+                output.defaultValue = samples[key]['output'];
+            }
+        }
+
+        add_default_value();

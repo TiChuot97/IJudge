@@ -1,7 +1,62 @@
 doctype html
 html
-  head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
-  body
-    block content
+    head
+        title= title
+        link(rel='stylesheet', href='/stylesheets/style.css')
+    body
+        // Navigating bar
+        div(id = 'header')
+            nav(class = 'navigate-bar' id = 'navigate')
+                ul
+                    h1 iJudge
+                    li: a(href = '/logout' id = 'log_out') Logout
+                    li: a(href = '/login' id = 'log_in') Login
+                    li: a(href = '/add_problem') Add new problem
+                    li: a(href = '/problem_list/page/1') All problems
+                    li: a(href = '/') Home
+        script.
+            function get_username(cookie) {
+                var pos = cookie.indexOf('**');
+                return (cookie.substring(0, pos)).substring(5);
+            }
+
+            function display_user() {
+                var cookie = document.cookie;
+                var user = document.createElement('a');
+                var navigate_bar = document.getElementById('navigate');
+                var header = document.getElementById('header');
+                user.className = 'username';
+                user.style.float = 'right';
+
+                if (cookie == '' || cookie == undefined) {
+                    user.href = '/create_account';
+                    user.innerHTML = 'Create new account';
+                    user.style.fontSize = '14px';
+                }
+                else {
+                    var username = get_username(cookie);
+                    user.innerHTML = username;
+                }
+                header.insertBefore(user, navigate_bar);
+                header.insertBefore(document.createElement('br'), navigate_bar);
+            }
+
+            function display_login_logout() {
+                var cookie = document.cookie;
+                var login = document.getElementById('log_in');
+                var logout = document.getElementById('log_out');
+
+                if (cookie == '' || cookie == undefined) {
+                    login.style.display = 'block';
+                    logout.style.display = 'none';
+                }
+                else {
+                    login.style.display = 'none';
+                    logout.style.display = 'block';
+                }
+            }
+
+            display_user();
+            display_login_logout();
+
+        block content

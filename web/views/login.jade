@@ -1,0 +1,27 @@
+extends layout
+
+block content
+    div(style = 'position: absolute; left: 40%;')
+        form(method = 'POST' id = 'login' style = 'margin-top: 2em;')
+            key Username
+            br
+            input(type = 'text' name = 'username' id = 'username' size = '35' class = 'input-box' required = 'required')
+            br
+            key Password:
+            br
+            input(type = 'password' name = 'password' id = 'password' size = '35' class = 'input-box' required = 'required')
+            br
+            button(type = 'submit' id = 'submit' style = 'margin-right: 1em;')= 'login'
+        div(style = 'margin-top: 1em;')
+            a(href = '/create_account')= 'Create new account...'
+            a(style = 'display: none; color: red; margin-top: 1em;' id = 'error')= 'Wrong username or password!!!'
+
+    script.
+        function display_error() {
+            var failed = !{failed}
+            if (failed == 1) {
+                var error_mess = document.getElementById('error');
+                error_mess.style.display = 'block';
+            }
+        }
+        display_error();
