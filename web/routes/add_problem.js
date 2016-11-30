@@ -40,24 +40,23 @@ router.post('/', function(req, res, next) {
     var num_cases = req.body.num_sample;
     var username = get_username(req.cookies['user']);
 
-    name = filter(name);
-    time = filter(time);
-    memory = filter(memory);
-    description = filter(description);
-
-    console.log(description);
+    var filtered_name = filter(name);
+    var filtered_time = filter(time);
+    var filtered_memory = filter(memory);
+    var filtered_description = filter(description);
 
     var cases = {};
+    var filtered_cases = {};
     for (var index = 1; index <= num_cases; ++index) {
         cases[index] = {};
         cases[index]['input'] = req.body['input_sample_' + index];
         cases[index]['output'] = req.body['output_sample_' + index];
-        cases[index]['input'] = filter(cases[index]['input']);
-        cases[index]['output'] = filter(cases[index]['output']);
+        filtered_cases[index]['input'] = filter(cases[index]['input']);
+        filtered_cases[index]['output'] = filter(cases[index]['output']);
     }
 
-    database.add_problem(name, time, memory, description, username);
-    database.add_sample(cases);
+    database.add_problem(filtered_name, filtered_time, filtered_memory, filtered_description, username);
+    database.add_sample(filtered_cases);
 
     res.render('problem', {
         title: 'Problem',

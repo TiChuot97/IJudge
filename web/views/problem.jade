@@ -48,9 +48,9 @@ block content
 
         display_permission();
 
-    h1(class = 'header')= name
-    h2(style = 'text-align: center;')= 'Time Limit: ' + time
-    h2(style = 'text-align: center;')= 'Memory Limit: ' + memory
+    h1(class = 'header' id = 'name')= name
+    h2(style = 'text-align: center;' id = 'time')= 'Time Limit: ' + time
+    h2(style = 'text-align: center;' id = 'memo')= 'Memory Limit: ' + memory
     p(style = 'white-space: pre-wrap; width: 80em; margin-left: 2em;')= description
 
     each test in sample

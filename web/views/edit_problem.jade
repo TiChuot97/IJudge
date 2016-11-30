@@ -3,6 +3,7 @@ extends add_problem
 block content_edit
     script.
         function filter(sample) {
+            sample = sample.replace(/&amp;/g, '&');
             sample = sample.replace(/&#39;/g, '\'');
             sample = sample.replace(/&#34;/g, '\"');
             return sample;
