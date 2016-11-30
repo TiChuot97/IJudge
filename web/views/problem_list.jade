@@ -1,0 +1,47 @@
+//
+   Created by lanhoangdao on 11/16/16.
+
+extends layout
+
+block content
+    div
+        table(class = 'problem-list' align = 'center')
+            col(width = '30')
+            col(width = '100')
+            tr
+                th= 'ID'
+                th= 'Problem'
+            each problem in problems
+                tr
+                    td(style = 'text-align: center;')= problem.id
+                    td
+                        a(href = '/problem/' + problem.id style = 'margin-left: 1em;')= problem.name
+
+        div(style = 'width: 45%; float: left; margin-top: 1em; margin-bottom: 1em;' align = 'center')
+            a(style = 'color: black;' href = '/problem_list/page/' + prev id = 'prev')= 'Previous'
+
+        div(style = 'width: 10%; float: left; margin-top: 1em; margin-bottom: 1em;' align = 'center')
+            a(style = 'color: black;')= page
+
+        div(style = 'width: 45%; float: left; margin-top: 1em; margin-bottom: 1em;' align = 'center')
+            a(style = 'color: black;' href = '/problem_list/page/' + next id = 'next')= 'Next'
+
+    script.
+        function navigate() {
+            var next_page = !{next};
+            var prev_page = !{prev};
+
+            if (next_page == 0) {
+                var next = document.getElementById('next');
+                next.removeAttribute('href');
+                next.style.color = 'gray';
+            }
+
+            if (prev_page == 0) {
+                var prev = document.getElementById('prev');
+                prev.removeAttribute('href');
+                prev.style.color = 'gray';
+            }
+        }
+
+        navigate();
