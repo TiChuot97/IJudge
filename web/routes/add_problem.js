@@ -25,6 +25,12 @@ function get_username(cookie) {
     return cookie.substring(0, pos);
 }
 
+function filter(sample) {
+    sample = sample.replace(/\'/g, '&#39;');
+    sample = sample.replace(/\"/g, '&#34;');
+    return sample;
+}
+
 /* Add new problem */
 router.post('/', function(req, res, next) {
     var name = req.body.name;
@@ -34,11 +40,20 @@ router.post('/', function(req, res, next) {
     var num_cases = req.body.num_sample;
     var username = get_username(req.cookies['user']);
 
+    name = filter(name);
+    time = filter(time);
+    memory = filter(memory);
+    description = filter(description);
+
+    console.log(description);
+
     var cases = {};
     for (var index = 1; index <= num_cases; ++index) {
         cases[index] = {};
         cases[index]['input'] = req.body['input_sample_' + index];
         cases[index]['output'] = req.body['output_sample_' + index];
+        cases[index]['input'] = filter(cases[index]['input']);
+        cases[index]['output'] = filter(cases[index]['output']);
     }
 
     database.add_problem(name, time, memory, description, username);

@@ -2,6 +2,12 @@ extends add_problem
 
 block content_edit
     script.
+        function filter(sample) {
+            sample = sample.replace(/&#39;/g, '\'');
+            sample = sample.replace(/&#34;/g, '\"');
+            return sample;
+        }
+
         function add_default_value() {
             var name = document.getElementById('name');
             var time = document.getElementById('time');
@@ -12,6 +18,11 @@ block content_edit
             time.value = '#{time}';
             memo.value = '#{memory}';
             description.defaultValue = '#{description}';
+
+            name.value = filter(name.value);
+            time.value = filter(time.value);
+            memo.value = filter(memo.value);
+            description.defaultValue = filter(description.defaultValue);
 
             var string_samples = '#{sample}';
             var samples = JSON.parse(string_samples);
@@ -24,6 +35,8 @@ block content_edit
 
                 input.defaultValue = samples[key]['input'];
                 output.defaultValue = samples[key]['output'];
+                input.defaultValue = filter(input.defaultValue);
+                output.defaultValue = filter(output.defaultValue);
             }
         }
 

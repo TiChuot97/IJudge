@@ -21,6 +21,8 @@ function display_page(data, sample, res) {
         cases[index + 1]['output'] = sample[index].output;
     }
 
+    console.log(name);
+
     res.render('edit_problem', {
         title: name,
         id: id,

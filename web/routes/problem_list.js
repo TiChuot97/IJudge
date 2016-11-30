@@ -27,7 +27,7 @@ function display_problem_list(data, res, num_page) {
     }
 
     var next_page = 0;
-    if (num_page != total_page)
+    if (num_page != total_page && total_page != 0)
         next_page = num_page + 1;
 
     var prev_page = num_page - 1;

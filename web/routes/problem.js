@@ -6,6 +6,12 @@ var express = require('express');
 var router = express.Router();
 var database = require('../database/database');
 
+function filter(sample) {
+    sample = sample.replace(/&#39;/g, '\'');
+    sample = sample.replace(/&#34;/g, '\"');
+    return sample;
+}
+
 function display_page(data, sample, res) {
     var id = data[0].id;
     var name = data[0].name;
@@ -14,11 +20,18 @@ function display_page(data, sample, res) {
     var description = data[0].description;
     var author = data[0].author;
 
+    name = filter(name);
+    time = filter(time);
+    memory = filter(memory);
+    description = filter(description);
+
     var cases = {};
     for (var index = 0; index < sample.length; ++index) {
         cases[index + 1] = {};
         cases[index + 1]['input'] = sample[index].input;
         cases[index + 1]['output'] = sample[index].output;
+        cases[index + 1]['input'] = filter(cases[index + 1]['input']);
+        cases[index + 1]['output'] = filter(cases[index + 1]['output']);
     }
 
     res.render('problem', {
