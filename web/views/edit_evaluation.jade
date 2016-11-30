@@ -1,0 +1,36 @@
+extends layout
+
+block content
+    div(id = "editor" style = 'overflow-y: scroll; overflow-x: scroll; width: 100%; height: 600px;')
+
+    script(src = "http://d3js.org/d3.v4.min.js")
+    script(src = "/flowchart/util.js")
+    script(src = "/flowchart/init.js")
+    script(src = "/flowchart/menu.js")
+    script(src = "/flowchart/link.js")
+    script(src = "/flowchart/node.js")
+    script(src = "/flowchart/save.js")
+    script(src = "/flowchart/load.js")
+    script(src = "/flowchart/data.js")
+    script(src = "/flowchart/main.js")
+
+    script.
+        function my_submit() {
+            document.getElementById('flow').value = save();
+            document.getElementById('form').submit();
+        }
+
+
+    form(method = 'POST' id = 'form' style = 'margin-top: 2em;')
+        div(class = 'container' id = 'add_problem_block')
+            input(type = 'hidden' name = 'flow' id = 'flow' value = '')
+            span Evaluation ID (must be unique): &nbsp; &nbsp;
+            input(type = 'text' name = 'name' id = 'name' size = '16' class = 'input-box' required = 'required')
+            br
+            span Upload Package: &nbsp; &nbsp;
+            input(type = 'file' required = 'required' name = 'package')
+            br
+            br
+            input(type = 'submit' onclick = "document.getElementById('flow').value = save()")
+
+
