@@ -75,7 +75,7 @@ app.use(function(err, req, res, next) {
   });
 });
 
-function get_username(cookie) {
+get_username = function get_username(cookie) {
   var pos = cookie.indexOf('**');
   return cookie.substring(0, pos);
 }

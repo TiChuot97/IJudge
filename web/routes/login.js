@@ -41,9 +41,10 @@ function login(data, username, password, res) {
         return;
     }
 
+    var admin = data[0].admin;
     var random_number = Math.random().toString();
     random_number = random_number.substring(2, random_number.length);
-    var new_cookie = username + '**' + random_number;
+    var new_cookie = username + '**' + admin +  random_number;
     res.cookie('user', new_cookie, { maxAge: 300 * 60 * 1000 });
 
     map_cookies[username] = new_cookie;

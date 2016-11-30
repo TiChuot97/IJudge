@@ -7,6 +7,11 @@ var router = express.Router();
 var database = require('../database/database');
 
 function display_page(data, sample, res) {
+    if (author != get_username(res.cookies['user'])) {
+        res.redirect('/login');
+        return;
+    }
+
     var id = data[0].id;
     var name = data[0].name;
     var time = data[0].time;

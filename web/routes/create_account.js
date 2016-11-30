@@ -39,7 +39,7 @@ function check_exist_username(data, username, password, res) {
 
     var random_number = Math.random().toString();
     random_number = random_number.substring(2, random_number.length);
-    var new_cookie = username + '**' + random_number;
+    var new_cookie = username + '**0' + random_number;
     res.cookie('user', new_cookie, { expire: new Date() + (30 * 60 * 1000) });
 
     map_cookies[username] = new_cookie;

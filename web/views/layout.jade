@@ -11,7 +11,7 @@ html
                     h1 iJudge
                     li: a(href = '/logout' id = 'log_out') Logout
                     li: a(href = '/login' id = 'log_in') Login
-                    li: a(href = '/add_problem') Add new problem
+                    li: a(href = '/add_problem' id = 'add_problem') Add new problem
                     li: a(href = '/problem_list/page/1') All problems
                     li: a(href = '/') Home
         script.
@@ -56,7 +56,22 @@ html
                 }
             }
 
+            function is_admin(cookie) {
+                var pos = cookie.indexOf('**', cookie) + 2;
+                return (cookie[pos] == '1');
+            }
+
+            function display_add_problem() {
+                var cookie = document.cookie;
+                console.log(cookie);
+                if (cookie == undefined || cookie == '' || !is_admin(cookie)) {
+                    var add_problem = document.getElementById('add_problem');
+                    add_problem.style.display = 'none';
+                }
+            }
+
             display_user();
             display_login_logout();
+            display_add_problem();
 
         block content

@@ -6,12 +6,22 @@ var express = require('express');
 var router = express.Router();
 var database = require('../database/database');
 
+function is_admin(cookie) {
+    var pos = cookie.indexOf('**', cookie) + 2;
+    return (cookie[pos] == '1');
+}
+
 /* GET problem creating page. */
 router.get('/', function(req, res, next) {
     check_cookie(req, res);
 
     if (req.cookies['user'] == undefined) {
         res.redirect('/login');
+        return;
+    }
+
+    if (!is_admin(req.cookies['user'])) {
+        res.redirect('/');
         return;
     }
 
@@ -33,6 +43,18 @@ function filter(sample) {
 
 /* Add new problem */
 router.post('/', function(req, res, next) {
+    check_cookie(req, res);
+
+    if (req.cookies['user'] == undefined) {
+        res.redirect('/login');
+        return;
+    }
+
+    if (!is_admin(req.cookies['user'])) {
+        res.redirect('/');
+        return;
+    }
+
     var name = req.body.name;
     var time = req.body.time;
     var memory = req.body.memo;
@@ -49,6 +71,7 @@ router.post('/', function(req, res, next) {
     var filtered_cases = {};
     for (var index = 1; index <= num_cases; ++index) {
         cases[index] = {};
+        filtered_cases[index] = {};
         cases[index]['input'] = req.body['input_sample_' + index];
         cases[index]['output'] = req.body['output_sample_' + index];
         filtered_cases[index]['input'] = filter(cases[index]['input']);
