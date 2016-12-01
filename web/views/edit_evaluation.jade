@@ -21,16 +21,19 @@ block content
         }
 
 
-    form(method = 'POST' id = 'form' style = 'margin-top: 2em;')
+    form(method = 'POST' id = 'form' style = 'margin-top: 2em;' enctype="multipart/form-data")
         div(class = 'container' id = 'add_problem_block')
             input(type = 'hidden' name = 'flow' id = 'flow' value = '')
             span Evaluation ID (must be unique): &nbsp; &nbsp;
-            input(type = 'text' name = 'name' id = 'name' size = '16' class = 'input-box' required = 'required')
+            input(type = 'text' name = 'id' id = 'id' size = '16' class = 'input-box' required = 'required')
             br
             span Upload Package: &nbsp; &nbsp;
-            input(type = 'file' required = 'required' name = 'package')
+            input(type = 'file' name = 'package')
             br
             br
             input(type = 'submit' onclick = "document.getElementById('flow').value = save()")
 
-
+    if arg_id != undefined
+        script.
+            document.getElementById('id').value = '!{arg_id}';
+            load(JSON.parse(!{arg_flow}));

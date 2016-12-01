@@ -21,7 +21,7 @@ var NODES = {
     "if_exitcode": {
         op: "if_exitcode",
         style: 2,
-	    height: 55, width: 300,
+	    height: 55, width: 300, 
 	    fill: "rgb(255, 235, 148)", shadowX: 4,
 	    content: 
 `
@@ -35,7 +35,7 @@ var NODES = {
 	    <option value = "<=">&lt;=</option>
         <option value = ">=">&gt;=</option>
     </select>
-    <input type = "number", style = "width: 60">
+<input type = "number", style = "width: 60px">
 </div>
 `
     },

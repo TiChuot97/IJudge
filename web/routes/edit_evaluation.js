@@ -1,6 +1,11 @@
 var express = require('express');
 var router = express.Router();
-var database = require('../database/database');
+var db = require('../database/database').connection;
+var multer = require('multer');
+var common = require('../common');
+var mysql = require('mysql');
+var fs = require('fs');
+var path = require('path');
 
 router.get('/', function(req, res, next) {
     check_cookie(req, res);
@@ -10,14 +15,66 @@ router.get('/', function(req, res, next) {
         return;
     }
 
+    if (!common.is_admin(req.cookies['user'])) {
+        res.redirect('/');
+        return;
+    }
 
-    res.render('edit_evaluation', {
-        title: 'Edit Evaluation'
-    });
+    var id = req.query.id || "";
+    if (id != "")
+        db.query('SELECT flow FROM packages WHERE id = ?', [mysql.escape(id)], function(err, r) {
+            if (err) throw err;
+            if (r.length > 0) {
+                console.log(r[0].flow);
+                res.render('edit_evaluation', {
+                    title: 'Edit Evaluation',
+                    arg_flow: r[0].flow,
+                    arg_id: id
+                });
+            }
+            else
+                res.redirect('/');
+        });
+    else
+        res.render('edit_evaluation', {
+            title: 'Add Evaluation'
+        });
 });
 
-router.post('/', function(req, res, next) {
-    console.log(req);
+var upload = multer({dest: './uploads'});
+
+router.post('/', upload.any(), function(req, res, next) {
+    check_cookie(req, res);
+
+
+
+    if (req.cookies['user'] == undefined || !common.is_admin(req.cookies['user'])) {
+        res.redirect('/');
+        return;
+    }
+
+    db.query('CREATE TABLE IF NOT EXISTS packages(id TEXT, flow TEXT)', function(err, r) {
+        if (err) throw err;
+        var id = req.body.id, flow = req.body.flow;
+        if (id == null || flow == null || id == "" || flow == "")
+            return;
+        db.query('DELETE FROM packages WHERE id = ?', [mysql.escape(id)], function (err, r) {
+            if (err) throw err;
+            db.query('INSERT INTO packages(id, flow) value (?, ?)', [mysql.escape(id), mysql.escape(flow)], function (err, r) {
+                if (err) throw err;
+                var f = req.files;
+                if (f.length > 0) {
+                    f = f[0];
+                    if (!fs.existsSync('packages'))
+                        fs.mkdir('packages');
+                    fs.createReadStream(path.join('.', f.path))
+                        .pipe(fs.createWriteStream(path.join('./packages', id + '.zip')));
+                }
+                res.redirect('/view_evaluations');
+            });
+        });
+    });
+
 });
 
 module.exports = router;

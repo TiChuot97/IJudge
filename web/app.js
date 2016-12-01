@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 //var session = require('express-session')
 var bodyParser = require('body-parser');
+var multer = require('multer');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -17,8 +18,11 @@ var create_account = require('./routes/create_account');
 var delete_problem = require('./routes/delete_problem');
 var edit_problem = require('./routes/edit_problem');
 var edit_evaluation = require('./routes/edit_evaluation');
+var view_evaluations = require('./routes/view_evaluations');
+var delete_evaluation = require('./routes/delete_evaluation');
 
 var app = express();
+//app.use(multer({ dest: './uploads/'}).any());
 
 map_cookies = {};
 
@@ -28,6 +32,8 @@ app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -45,6 +51,8 @@ app.use('/create_account', create_account);
 app.use('/delete_problem', delete_problem);
 app.use('/edit_problem', edit_problem);
 app.use('/edit_evaluation', edit_evaluation);
+app.use('/view_evaluations', view_evaluations);
+app.use('/delete_evaluation', delete_evaluation);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -5,11 +5,7 @@
 var express = require('express');
 var router = express.Router();
 var database = require('../database/database');
-
-function is_admin(cookie) {
-    var pos = cookie.indexOf('**', cookie) + 2;
-    return (cookie[pos] == '1');
-}
+var common = require('../common');
 
 /* GET problem creating page. */
 router.get('/', function(req, res, next) {
@@ -20,7 +16,7 @@ router.get('/', function(req, res, next) {
         return;
     }
 
-    if (!is_admin(req.cookies['user'])) {
+    if (!common.is_admin(req.cookies['user'])) {
         res.redirect('/');
         return;
     }

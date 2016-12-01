@@ -11,9 +11,10 @@ html
                     h1 iJudge
                     li: a(href = '/logout' id = 'log_out') Logout
                     li: a(href = '/login' id = 'log_in') Login
-                    li: a(href = '/edit_evaluation' id = 'edit_evaluation') Add evaluation
-                    li: a(href = '/add_problem' id = 'add_problem') Add new problem
-                    li: a(href = '/problem_list/page/1') All problems
+                    li: a(href = '/view_evaluations' id = 'view_evaluations') View Evaluations
+                    li: a(href = '/edit_evaluation' id = 'edit_evaluation') Add Evaluation
+                    li: a(href = '/add_problem' id = 'add_problem') Add Problem
+                    li: a(href = '/problem_list/page/1') View Problems
                     li: a(href = '/') Home
         script.
             function get_username(cookie) {
@@ -69,6 +70,7 @@ html
                     var edit_evaluation = document.getElementById('edit_evaluation');
                     add_problem.style.display = 'none';
                     edit_evaluation.style.display = 'none';
+                    view_evaluations.style.display = 'none';
                 }
             }
 
