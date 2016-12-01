@@ -1,0 +1,21 @@
+extends layout
+
+block content
+    div
+        table(class = 'problem-list' align = 'center')
+            col(width = '20%')
+            col(width = '40%')
+            col(width = '25%')
+            col(width = '25%')
+            tr
+                th= 'ID'
+                th= 'Problem'
+                th= 'User'
+                th= 'Operation'
+            - for (var i = 0; i < arg.length; ++i)
+                tr
+                    td(style = 'text-align: center;')= arg[i].id
+                    td(style = 'text-align: center;')= arg[i].problem
+                    td(style = 'text-align: center;')= arg[i].user
+                    td(style = 'text-align: center;')
+                        a(href = '/view_submissions/' + arg[i].id) view

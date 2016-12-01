@@ -23,7 +23,7 @@ block content
         ul
             li: a(href = '/edit_problem/' + id id = 'edit_problem' style = 'display: none;') Edit
             li: a(button = 'delete_problem' id = 'delete_problem' style = 'display: none;' onclick = 'delete_problem()') Delete
-            li: a(href = '/submit_problem' id = 'submit_problem') Submit
+            li: a(href = '/make_submission' id = 'submit_problem') Submit
 
     script.
         function get_username(cookie) {
@@ -49,8 +49,8 @@ block content
         display_permission();
 
     h1(class = 'header' id = 'name')= name
-    h2(style = 'text-align: center;' id = 'time')= 'Time Limit: ' + time
-    h2(style = 'text-align: center;' id = 'memo')= 'Memory Limit: ' + memory
+    h2(style = 'text-align: center;' id = 'time')= time
+    h2(style = 'text-align: center;' id = 'memo')= memory
     p(style = 'white-space: pre-wrap; width: 80em; margin-left: 2em;')= description
 
     each test in sample

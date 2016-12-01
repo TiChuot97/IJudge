@@ -26,11 +26,6 @@ router.get('/', function(req, res, next) {
 	});
 });
 
-function get_username(cookie) {
-    var pos = cookie.indexOf('**');
-    return cookie.substring(0, pos);
-}
-
 function filter(sample) {
     sample = sample.replace(/(?:\r\n|\r|\n)/g, '&#br;');
     sample = sample.replace(/\'/g, '&#39;');
@@ -52,7 +47,7 @@ router.post('/', function(req, res, next) {
         return;
     }
 
-    if (!is_admin(req.cookies['user'])) {
+    if (!common.is_admin(req.cookies['user'])) {
         res.redirect('/');
         return;
     }
@@ -62,7 +57,7 @@ router.post('/', function(req, res, next) {
     var memory = req.body.memo;
     var description = req.body.description;
     var num_cases = req.body.num_sample;
-    var username = get_username(req.cookies['user']);
+    var username = common.get_username(req.cookies['user']);
 
     var filtered_name = filter(name);
     var filtered_time = filter(time);

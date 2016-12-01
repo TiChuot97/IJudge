@@ -20,6 +20,8 @@ var edit_problem = require('./routes/edit_problem');
 var edit_evaluation = require('./routes/edit_evaluation');
 var view_evaluations = require('./routes/view_evaluations');
 var delete_evaluation = require('./routes/delete_evaluation');
+var make_submission = require('./routes/make_submission');
+var view_submissions = require('./routes/view_submissions');
 
 var app = express();
 //app.use(multer({ dest: './uploads/'}).any());
@@ -53,6 +55,8 @@ app.use('/edit_problem', edit_problem);
 app.use('/edit_evaluation', edit_evaluation);
 app.use('/view_evaluations', view_evaluations);
 app.use('/delete_evaluation', delete_evaluation);
+app.use('/make_submission', make_submission);
+app.use('/view_submissions', view_submissions);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

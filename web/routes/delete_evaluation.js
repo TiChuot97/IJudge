@@ -21,7 +21,7 @@ router.get('/:which', function(req, res, next) {
     }
 
     var id = req.params.which;
-    db.query('DELETE FROM packages WHERE id = ?', [mysql.escape(id)], function(err, r) {
+    db.query('DELETE FROM packages WHERE id = ?', [id], function(err, r) {
         if (err) throw err;
         var p = path.join('./packages', id + '.zip');
         if (fs.existsSync(p))

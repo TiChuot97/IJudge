@@ -13,6 +13,7 @@ var MENU = [
     ]],
     ["Input/Output", [
 	["File", "file"],
+	["Input", "input"],
 	["Output", "output"]
     ]]
 ]
@@ -158,7 +159,7 @@ File <input size = 16/>
 `
     },
 
-    /*["Input", {
+    "input": {
         op: "input",
         rx:30, ry:30, style: 0, height:40, width:100,
         fill: "rgb(100, 200, 100)",
@@ -169,7 +170,7 @@ File <input size = 16/>
 INPUT
 </div>
 `
-    }],*/
+    },
 
     "output": {
         op: "output",

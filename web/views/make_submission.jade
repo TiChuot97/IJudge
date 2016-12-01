@@ -1,0 +1,15 @@
+extends layout
+
+block content
+    form(method = 'POST' style = 'margin-top: 2em;')
+        span Problem ID: &nbsp; &nbsp;
+        input(name = 'id' id = 'id' required = 'required')
+        br
+        br
+        textarea(name = 'content' cols = 100 rows = 40 style = "overflow: scroll; white-space: nowrap;" required = 'required')
+        br
+        br
+        input(type = 'submit')
+
+    script.
+        document.getElementById('id').value = '#{arg_id}'

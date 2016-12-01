@@ -22,7 +22,7 @@ router.get('/', function(req, res, next) {
 
     var id = req.query.id || "";
     if (id != "")
-        db.query('SELECT flow FROM packages WHERE id = ?', [mysql.escape(id)], function(err, r) {
+        db.query('SELECT flow FROM packages WHERE id = ?', [id], function(err, r) {
             if (err) throw err;
             if (r.length > 0) {
                 console.log(r[0].flow);
@@ -56,11 +56,11 @@ router.post('/', upload.any(), function(req, res, next) {
     db.query('CREATE TABLE IF NOT EXISTS packages(id TEXT, flow TEXT)', function(err, r) {
         if (err) throw err;
         var id = req.body.id, flow = req.body.flow;
-        if (id == null || flow == null || id == "" || flow == "")
+        if (!id || !flow || id == "" || flow == "")
             return;
-        db.query('DELETE FROM packages WHERE id = ?', [mysql.escape(id)], function (err, r) {
+        db.query('DELETE FROM packages WHERE id = ?', [id], function (err, r) {
             if (err) throw err;
-            db.query('INSERT INTO packages(id, flow) value (?, ?)', [mysql.escape(id), mysql.escape(flow)], function (err, r) {
+            db.query('INSERT INTO packages(id, flow) value (?, ?)', [id, flow], function (err, r) {
                 if (err) throw err;
                 var f = req.files;
                 if (f.length > 0) {

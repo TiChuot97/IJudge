@@ -23,7 +23,7 @@ router.get('/', function(req, res, next) {
     db.query('SELECT * FROM packages', function(err, r) {
         if (err) throw err;
         var v = r.map(function (x) {
-            return x.id.substr(1, x.id.length - 2);
+            return x.id;
         });
         res.render('view_evaluations', {
             arg: v
