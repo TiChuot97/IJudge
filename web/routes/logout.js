@@ -23,7 +23,7 @@ router.get('/', function(req, res, next) {
     var username = get_username(req.cookies['user']);
     delete map_cookies[username];
     res.clearCookie('user');
-    
+
     res.redirect('/');
 });
 

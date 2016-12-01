@@ -10,6 +10,11 @@ block content_edit
             return sample;
         }
 
+        function filter_quote(sample) {
+            sample = sample.replace(/&quot;/g, '\"');
+            return sample;
+        }
+
         function add_default_value() {
             var name = document.getElementById('name');
             var time = document.getElementById('time');
@@ -19,7 +24,6 @@ block content_edit
             name.value = '#{name}';
             time.value = '#{time}';
             memo.value = '#{memory}';
-            console.log('#{description}');
             description.defaultValue = '#{description}';
 
             name.value = filter(name.value);
@@ -27,19 +31,20 @@ block content_edit
             memo.value = filter(memo.value);
             description.defaultValue = filter(description.defaultValue);
 
-            var string_samples = "#{sample}";
+            var string_samples = '#{sample}';
+            string_samples = filter_quote(string_samples);
             var samples = JSON.parse(string_samples);
 
             for (var key in samples) {
                 add_sample_cases();
                 var num_samples = parseInt(document.getElementById('num_sample').value);
-                var input = document.getElementByName('input_sample_' + num_samples);
-                var output = document.getElementByName('output_sample_' + num_samples);
+                var input = document.getElementsByName('input_sample_' + num_samples);
+                var output = document.getElementsByName('output_sample_' + num_samples);
 
-                input.defaultValue = samples[key]['input'];
-                output.defaultValue = samples[key]['output'];
-                input.defaultValue = filter(input.defaultValue);
-                output.defaultValue = filter(output.defaultValue);
+                input[0].defaultValue = samples[key]['input'];
+                output[0].defaultValue = samples[key]['output'];
+                input[0].defaultValue = filter(input[0].defaultValue);
+                output[0].defaultValue = filter(output[0].defaultValue);
             }
         }
 

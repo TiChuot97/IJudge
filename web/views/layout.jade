@@ -64,7 +64,6 @@ html
 
             function display_add_problem() {
                 var cookie = document.cookie;
-                console.log(cookie);
                 if (cookie == undefined || cookie == '' || !is_admin(cookie)) {
                     var add_problem = document.getElementById('add_problem');
                     var edit_evaluation = document.getElementById('edit_evaluation');
