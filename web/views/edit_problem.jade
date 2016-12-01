@@ -4,6 +4,7 @@ block content_edit
     script.
         function filter(sample) {
             sample = sample.replace(/&amp;/g, '&');
+            sample = sample.replace(/&#br;/g, '\n');
             sample = sample.replace(/&#39;/g, '\'');
             sample = sample.replace(/&#34;/g, '\"');
             return sample;
@@ -18,6 +19,7 @@ block content_edit
             name.value = '#{name}';
             time.value = '#{time}';
             memo.value = '#{memory}';
+            console.log('#{description}');
             description.defaultValue = '#{description}';
 
             name.value = filter(name.value);
@@ -25,7 +27,7 @@ block content_edit
             memo.value = filter(memo.value);
             description.defaultValue = filter(description.defaultValue);
 
-            var string_samples = '#{sample}';
+            var string_samples = "#{sample}";
             var samples = JSON.parse(string_samples);
 
             for (var key in samples) {

@@ -7,6 +7,7 @@ var router = express.Router();
 var database = require('../database/database');
 
 function filter(sample) {
+    sample = sample.replace(/&#br;/g, '\n');
     sample = sample.replace(/&#39;/g, '\'');
     sample = sample.replace(/&#34;/g, '\"');
     return sample;

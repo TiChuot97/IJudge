@@ -36,9 +36,15 @@ function get_username(cookie) {
 }
 
 function filter(sample) {
+    sample = sample.replace(/(?:\r\n|\r|\n)/g, '&#br;');
     sample = sample.replace(/\'/g, '&#39;');
     sample = sample.replace(/\"/g, '&#34;');
+    console.log(sample);
     return sample;
+}
+
+function display_last_problem(data, res) {
+    res.redirect('/problem/' + data[0].id);
 }
 
 /* Add new problem */
@@ -81,15 +87,7 @@ router.post('/', function(req, res, next) {
     database.add_problem(filtered_name, filtered_time, filtered_memory, filtered_description, username);
     database.add_sample(filtered_cases);
 
-    res.render('problem', {
-        title: 'Problem',
-        name: name,
-        time: time,
-        memory: memory,
-        description: description,
-        sample: cases,
-        author: username
-    });
+    database.get_last_problem(display_last_problem, res);
 });
 
 module.exports = router;
