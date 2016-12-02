@@ -22,19 +22,22 @@ router.get('/', function(req, res, next) {
 
     var id = req.query.id || "";
     if (id != "")
-        db.query('SELECT flow FROM packages WHERE id = ?', [id], function(err, r) {
-            if (err) throw err;
-            if (r.length > 0) {
-                console.log(r[0].flow);
-                res.render('edit_evaluation', {
-                    title: 'Edit Evaluation',
-                    arg_flow: r[0].flow,
-                    arg_id: id
-                });
-            }
-            else
-                res.redirect('/');
-        });
+		db.query('CREATE TABLE IF NOT EXISTS packages(id TEXT, flow TEXT)', function(err, r) {
+			if (err) throw err;
+			db.query('SELECT flow FROM packages WHERE id = ?', [id], function(err, r) {
+				if (err) throw err;
+				if (r.length > 0) {
+					console.log(r[0].flow);
+					res.render('edit_evaluation', {
+						title: 'Edit Evaluation',
+						arg_flow: r[0].flow,
+						arg_id: id
+					});
+				}
+				else
+					res.redirect('/');
+			});
+		});
     else
         res.render('edit_evaluation', {
             title: 'Add Evaluation'

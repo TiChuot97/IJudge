@@ -15,17 +15,20 @@ router.get('/', function(req, res, next) {
         return;
     }
 
-    db.query('SELECT * FROM submissions', function(err, r) {
-        if (err) throw err;
-        var v = r.sort(function (a, b) {
-            if (a.id != b.id)
-                return a.id < b.id ? 1 : -1;
-            return 0;
-        });
-        res.render('view_submissions', {
-            arg: v
-        })
-    })
+	db.query('CREATE TABLE IF NOT EXISTS submissions(id BIGINT NOT NULL AUTO_INCREMENT, problem TEXT, content TEXT, result TEXT, user TEXT, PRIMARY KEY (id))', function(err, r) {
+		if (err) throw err;
+		db.query('SELECT * FROM submissions', function(err, r) {
+			if (err) throw err;
+			var v = r.sort(function (a, b) {
+				if (a.id != b.id)
+					return a.id < b.id ? 1 : -1;
+				return 0;
+			});
+			res.render('view_submissions', {
+				arg: v
+			});
+		});
+	});
 });
 
 router.get('/:which', function (req, res, next) {
@@ -37,16 +40,18 @@ router.get('/:which', function (req, res, next) {
     }
 
     var id = req.params.which;
-
-    db.query('SELECT * FROM submissions WHERE id = ?', [id], function(err, r) {
-        console.log(r);
-        if (r.length > 0) {
-            var v = r[0];
-            res.render('view_single_submission', { arg_content: v.content, arg_result: v.result });
-        }
-        else
-            res.redirect('/');
-    });
+	db.query('CREATE TABLE IF NOT EXISTS submissions(id BIGINT NOT NULL AUTO_INCREMENT, problem TEXT, content TEXT, result TEXT, user TEXT, PRIMARY KEY (id))', function(err, r) {
+		if (err) throw err;
+		db.query('SELECT * FROM submissions WHERE id = ?', [id], function(err, r) {
+			console.log(r);
+			if (r.length > 0) {
+				var v = r[0];
+				res.render('view_single_submission', { arg_content: v.content, arg_result: v.result });
+			}
+			else
+				res.redirect('/');
+		});
+	});
 });
 
 module.exports = router;

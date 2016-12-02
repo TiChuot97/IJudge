@@ -1,10 +1,15 @@
+# This is a generic graph class which can be used in various senarios.
+
+# the Edge class
 class Edge:
     def __init__(self, src, dst, id = None, data = None):
         self.id = id
         self.src, self.dst = src, dst
         self.data = data
 
+# the Node class
 class Node:
+    # helper function that updates the information when adding an edge
     def link(self, e):
         def fun(f, i, j, e):
             if self == i:
@@ -14,6 +19,7 @@ class Node:
         fun(self.e_out, e.src, e.dst, e)
         fun(self.e_in,  e.dst, e.src, e)
 
+    # helper function that updates the information when removing en edge
     def unlink(self, e):
         def fun(f, i, j, e):
             if self == i:
@@ -27,6 +33,7 @@ class Node:
         self.e_in, self.e_out = {}, {}
         
 class Graph:
+    # dereference the id and get the corresponding node
     def lookup(ref, f, g):
         if ref in f:
             return f[ref]
@@ -34,13 +41,14 @@ class Graph:
             return ref
         else:
             return None
-    
+
     def edge(self, ref):
         return Graph.lookup(ref, self.ef, self.e)
 
     def node(self, ref):
         return Graph.lookup(ref, self.vf, self.v)
-    
+
+    # create a node if it doesn't exist
     def default(self, ref):
         v = self.node(ref)
         if v == None:
@@ -50,6 +58,7 @@ class Graph:
                 self.vf[ref] = v
         return v
 
+    # add a new node to the graph
     def add_node(self, id = None, data = None):
         r = Node(id, data)
         self.v.add(r)
@@ -57,6 +66,7 @@ class Graph:
             self.vf[id] = r
         return r
 
+    # add an edge to the graph, creates new nodes if they don't exist
     def add_edge(self, src, dst, id = None, data = None):
         s, t = self.default(src), self.default(dst)
         e = Edge(s, t, id, data)
@@ -67,6 +77,7 @@ class Graph:
         t.link(e)
         return e
 
+    # remove an edge from the graph
     def remove_edge(self, ref):
         e = self.edge(ref)
         if e == None:
@@ -77,6 +88,7 @@ class Graph:
         e.src.unlink(e)
         e.dst.unlink(e)
 
+    # remove a node from the graph, also deleting the edges
     def remove_vertex(self, ref):
         v = self.vertex(ref)
         if v == None:
