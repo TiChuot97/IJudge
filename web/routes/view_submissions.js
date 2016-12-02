@@ -1,3 +1,6 @@
+/**
+ * required modules
+ */
 var express = require('express');
 var router = express.Router();
 var db = require('../database/database').connection;
@@ -7,9 +10,12 @@ var mysql = require('mysql');
 var fs = require('fs');
 var path = require('path');
 
+/**
+ * get requests handler
+ */
 router.get('/', function(req, res, next) {
+    // check the user's identity
     check_cookie(req, res);
-
     if (req.cookies['user'] == undefined) {
         res.redirect('/login');
         return;
@@ -19,6 +25,7 @@ router.get('/', function(req, res, next) {
 		if (err) throw err;
 		db.query('SELECT * FROM submissions', function(err, r) {
 			if (err) throw err;
+            // list all the submissions in *reverse* order
 			var v = r.sort(function (a, b) {
 				if (a.id != b.id)
 					return a.id < b.id ? 1 : -1;
@@ -31,6 +38,9 @@ router.get('/', function(req, res, next) {
 	});
 });
 
+/**
+ * post requests handler
+ */
 router.get('/:which', function (req, res, next) {
     check_cookie(req, res);
 
