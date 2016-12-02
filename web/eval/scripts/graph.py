@@ -1,7 +1,15 @@
-# This is a generic graph class which can be used in various senarios.
+# this is a generic graph library which can be used in various senarios
+# the library is optimized for both performance and easy-to-use
+# most operations can be done with a theoritically optimal time complexity
 
 # the Edge class
 class Edge:
+    # constructor, each edge object has the following fields:
+    #     id:   the id of the edge, or an alias
+    #           the id could be None, which means the edge does not have an alias (unnamed node)
+    #     src:  the source
+    #     dst:  the destination
+    #     data: the user specified satellite data
     def __init__(self, src, dst, id = None, data = None):
         self.id = id
         self.src, self.dst = src, dst
@@ -26,14 +34,22 @@ class Node:
                 f[j].remove(e)
         fun(self.e_out, e.src, e.dst, e)
         fun(self.e_in,  e.dst, e.src, e)
-    
+
+    # constructor, each node object has the following fields:
+    #     id:    the id of the node, or an alias for your understanding, which provides easy access
+    #            the id can be None, which means the node does not have an alias (unnamed node)
+    #     e_in:  the set of all edges that come to this node
+    #     e_out: the set of all edges that go from this node
+    #     data:  user specified satellite data
     def __init__(self, id = None, data = None):
         self.id = id
         self.data = data
         self.e_in, self.e_out = {}, {}
         
 class Graph:
-    # dereference the id and get the corresponding node
+    # dereference the id and get the mapped node object
+    # if the node object itself is passed in, the lookup process simply checks if it is in the graph or not
+    # returns None if failed
     def lookup(ref, f, g):
         if ref in f:
             return f[ref]
@@ -88,11 +104,11 @@ class Graph:
         e.src.unlink(e)
         e.dst.unlink(e)
 
-    # remove a node from the graph, also deleting the edges
-    def remove_vertex(self, ref):
+    # remove a node from the graph, also deleting the edges connected to the graph
+    def remove_node(self, ref):
         v = self.vertex(ref)
         if v == None:
-            raise Exception('invalid vertex')
+            raise Exception('invalid node')
         r = []
         def gather(f):
             for k, v in f.items():
@@ -106,6 +122,11 @@ class Graph:
         if v.id != None:
             del self.vf[v.id]
 
+    # list all edges from src to dst, None stands for whildcard here
+    #     specifically, (None, None) lists all edges
+    #                   (src,  None) lists all edges that goes from src
+    #                   (None,  dst) lists all edges that goes to dst
+    #                   (src,   dst) lists all edges that goes from src to dst
     def list_edges(self, src = None, dst = None):
         r = []
         def check(x):
@@ -131,7 +152,12 @@ class Graph:
                 for e in src.e_out[dst]:
                     r.append(e)
         return r
-                    
+
+    # constructor, a graph object is essentially a composition of four hashtables
+    #   1) the set of all nodes
+    #   2) the set of all edges
+    #   3) the map of ids to nodes
+    #   4) the map of ids to edges
     def __init__(self):
         self.v, self.e = set(), set()
         self.vf, self.ef = {}, {}

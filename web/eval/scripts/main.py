@@ -1,3 +1,6 @@
+# the main program of the flowchart interpreter
+
+# imports
 from graph import *
 from common import *
 from nodes import *
@@ -7,6 +10,7 @@ from collections import deque
 
 import json, sys, os
 
+# load the json from stdin, parse it and build the graph
 r = json.loads(sys.stdin.read())
 js = r
 g = Graph()
@@ -31,25 +35,38 @@ for v in r['nodes']:
         p.e_out = t.e_out
     else:
         raise Exception("unrecoginized node '%s'" % v['op'])
-    
+
+# initialize the queue
+# nodes that have no dependencies are added to the queue
 q = deque()
 for v in g.v:
     if v.data.ready():
         q.append(v)
 
+# the evaluation process
+#   1) get a node from the queue
+#   2) execute the operation of that node
+#   3) mark all outgoing edges (dependencies) as resolved, sending data to next nodes,
+#          check if these nodes are ready, if they are, push them into the queue
+#   4) repeat step 1 to step 3 until the queue is empty
+#   5) write output to stdout
 OUT = None
 while len(q) > 0:
     s = q.popleft()
     with s.data.mt:
         r = s.data.run()
+        # handle global input and output
         if 'ret' in r:
             OUT = r['ret']
         if 'input' in r:
             r['out'] = js['input']
         for e in g.list_edges(s, None):
             d = dict(r); lbl = e.data[1]
+            # check if there is any branch conditions
             if 'br' in d and d['br'] not in lbl:
                 continue
+            # whenever the data goes through a pipe, the output (or error) of the last node becomes the
+            #     input of the next node
             if e.data[0] == '-|':
                 if 'out' in lbl and 'err' in lbl:
                     raise Exception('<pipe>: cannot redirect both streams')
@@ -61,6 +78,7 @@ while len(q) > 0:
                     if 'out' not in d:
                         raise Exception('<pipe>: no data to redirect')
                     d['in'] = d['out']
+            # push the data flow to the next nodes, push them onto the queue if they are ready
             p = e.dst
             with p.data.mt:
                 p.data.push(s, d)
@@ -68,6 +86,7 @@ while len(q) > 0:
                     q.append(p)
 
 
+# output of the whole program
 if OUT == None:
     print('(no output)')
 else:

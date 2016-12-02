@@ -1,6 +1,7 @@
-import uuid, os
+# this file contains several helpful utility functions that are used elsewhere
+import os
 
-# Concert a string label to a boolean value for comparision
+# convert a string label to a boolean value for comparision
 def convert_label(s):
     s = s.strip()
     if s == 'yes' or s == 'true':
@@ -10,7 +11,7 @@ def convert_label(s):
     else:
         return s
 
-# Check if two labels match or not
+# check if two labels match or not
 def label_match(a, b):
     a = convert_label(a)
     b = convert_label(b)
@@ -20,6 +21,6 @@ def label_match(a, b):
         return True
     return False
 
-# Check if the given path exists or not
+# check if the given path exists or not
 def file_exists(s):
     return os.path.isfile(s)
